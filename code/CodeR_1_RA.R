@@ -1,0 +1,125 @@
+library(ggplot2)
+library(dplyr)
+library(car)
+
+# 2. LOAD DATA CSV
+df <- read.csv("C:/Users/Dalsa/Downloads/Dataset (1).csv", stringsAsFactors = TRUE)
+
+# 3. DATA CLEANING (PENYESUAIAN NAMA KOLOM)
+col_ipk <- grep("IPK", colnames(df))
+col_tt  <- grep("Tempat.Tinggal", colnames(df)) 
+
+colnames(df)[col_ipk] <- "IPK"
+colnames(df)[col_tt]  <- "Tempat_Tinggal"
+
+df$IPK <- as.numeric(as.character(df$IPK))
+
+str(df)
+
+# 4. BAGIAN 1: STATISTIK DESKRIPTIF
+desc_stats <- df %>%
+  group_by(Tempat_Tinggal) %>%
+  summarise(
+    Jumlah_N = n(),
+    Rata_Rata = mean(IPK, na.rm = TRUE),
+    Std_Deviasi = sd(IPK, na.rm = TRUE),
+    Min = min(IPK, na.rm = TRUE),
+    Max = max(IPK, na.rm = TRUE)
+  )
+print(desc_stats)
+
+# 5. GRAFIK 1: BOXPLOT RAPI & KONSISTEN 
+
+# A. Buat Dataframe Khusus Plotting
+df_plot <- df 
+
+# B. Singkat & Rapikan Nama Label 
+df_plot$Tempat_Tinggal <- gsub("Rumah mengontrak bersama-sama", "Kontrakan\n(Bersama)", df_plot$Tempat_Tinggal)
+df_plot$Tempat_Tinggal <- gsub("Rumah mengontrak Pribadi", "Kontrakan\n(Pribadi)", df_plot$Tempat_Tinggal)
+df_plot$Tempat_Tinggal <- gsub("Tinggal besama orangtua", "Rumah\nOrang Tua", df_plot$Tempat_Tinggal)
+
+# C. Plotting dengan Dataframe Baru (df_plot)
+ggplot(df_plot, aes(x = Tempat_Tinggal, y = IPK, fill = Tempat_Tinggal)) +
+  
+  # 1. Gambar Boxplot Utama
+  geom_boxplot(
+    alpha = 0.8,               
+    color = "black",           
+    
+    outlier.colour = "red",    
+    outlier.fill = "red",      
+    outlier.shape = 21,        
+    outlier.size = 3,          
+    outlier.alpha = 1          
+  ) +
+  
+  # 2. Titik Rata-rata (Mean)
+  stat_summary(
+    fun = mean, 
+    geom = "point", 
+    shape = 23,          
+    size = 3, 
+    fill = "white",      
+    color = "black",
+    stroke = 1
+  ) +
+  
+  # 3. Kosmetik (Tema Bersih)
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2") + 
+  labs(
+    title = "Sebaran IPK Mahasiswa per Tempat Tinggal",
+    subtitle = "Titik Merah = Outlier (Pencilan)",
+    x = "", 
+    y = "Indeks Prestasi Kumulatif (IPK)"
+  ) +
+  theme(
+    legend.position = "none", 
+    plot.title = element_text(face = "bold", size = 16, hjust = 0.5), 
+    plot.subtitle = element_text(size = 10, hjust = 0.5, face = "italic", color = "gray30"),
+    
+    axis.text.x = element_text(size = 10, face = "bold", color = "black", vjust = 0.5), 
+    
+    axis.title.y = element_text(face = "bold", vjust = 3),
+    panel.grid.major.x = element_blank()
+  )
+
+kolom_preview <- c(1, col_ipk, col_tt) 
+
+tabel_top5 <- head(df[, kolom_preview], 5)
+
+print(tabel_top5, row.names = FALSE)
+
+# 6. BAGIAN 2: UJI ASUMSI
+
+# A. Uji Normalitas (Shapiro-Wilk pada Residual)
+model_anova <- aov(IPK ~ Tempat_Tinggal, data = df)
+residual_data <- residuals(model_anova)
+shapiro_test <- shapiro.test(residual_data)
+print(shapiro_test)
+
+# GRAFIK 2: Q-Q PLOT (Bukti visual normalitas)
+qqnorm(residual_data, main = "Q-Q Plot Residual (Uji Normalitas)")
+qqline(residual_data, col = "red", lwd = 2)
+
+# B. Uji Homogenitas (Levene Test)
+levene_test <- leveneTest(IPK ~ Tempat_Tinggal, data = df)
+print(levene_test)
+
+# 7. BAGIAN 3: ANOVA
+
+model_anova <- aov(IPK ~ Tempat_Tinggal, data = df)
+
+hasil_anova <- summary(model_anova)
+
+cat("\n======================================================\n")
+cat("   TABEL HASIL ONE-WAY ANOVA  \n")
+cat("======================================================\n")
+print(hasil_anova)
+
+cat("\nKETERANGAN CARA BACA:")
+cat("\n- Df        : Derajat Bebas (Degrees of Freedom)")
+cat("\n- Sum Sq    : Jumlah Kuadrat (JK)")
+cat("\n- Mean Sq   : Kuadrat Tengah (KT)")
+cat("\n- F value   : Nilai F-Hitung")
+cat("\n- Pr(>F)    : Nilai P-Value \n")
