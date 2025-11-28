@@ -11,7 +11,7 @@
 
 4. Buka script di RStudio lalu install paket yang dibutuhkan:
 
-5 .install.packages(c("ggplot2","dplyr","car"))
+ 5 .install.packages(c("ggplot2","dplyr","car"))
 
 6. Pada baris ke-6 di R yaitu "df <- read.csv("C:/Users/Dalsa/Downloads/Dataset (1).csv", stringsAsFactors = TRUE)", diganti file path nya dengan direktori masing-masing tempat disimpannya dataset csv
 
