@@ -82,6 +82,6 @@ Output yang diperoleh:
 Cara Menjalankan Script
 1. Buka RStudio
 2. Pastikan library terinstal
-3. Buka file script:
+3. Buka file script
 4. Jalankan keseluruhan script
 5. Hasil akan muncul di output
