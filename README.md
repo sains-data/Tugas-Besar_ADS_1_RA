@@ -33,8 +33,8 @@ Dalam penelitian ini, fokus analisis diarahkan pada dua variabel utama, yaitu Te
 Kedua variabel ini dianalisis menggunakan statistik deskriptif, visualisasi boxplot, uji korelasi, dan regresi linear sederhana untuk mengevaluasi hubungan antara kondisi tempat tinggal dan prestasi akademik mahasiswa.
 
 ## 4. Struktur Repository
-/data/ → dataset setelah dibersihkan
-/code/ → script R (codeR_1_RA.R)
-/output/ → tabel, hasil uji, dan grafik
-/poster/ → poster A1 (PDF)
-README.md → dokumentasi proyek
+1. /data/ → dataset setelah dibersihkan
+2. /code/ → script R (codeR_1_RA.R)
+3. /output/ → tabel, hasil uji, dan grafik
+4. /poster/ → poster A1 (PDF)
+5. README.md → dokumentasi proyek
