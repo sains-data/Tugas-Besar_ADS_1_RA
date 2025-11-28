@@ -1,10 +1,6 @@
-# Deskripsi Proyek
-Repositori ini berisi analisis komprehensif mengenai perbedaan IPK mahasiswa berdasarkan kategori tempat tinggal, menggunakan metode One-Way ANOVA.
-Analisis dilakukan berdasarkan dataset berisi 326 mahasiswa dengan berbagai informasi demografis dan akademik. Tujuan utamanya adalah:
-1. Mengidentifikasi apakah tempat tinggal berpengaruh signifikan terhadap IPK
-2. Melakukan statistik deskriptif untuk masing-masing kategori
-3. Melakukan uji asumsi ANOVA termasuk normalitas dan homogenitas
-4. Menampilkan visualisasi berupa boxplot dan Q-Q plot
+# Tugas Besar Analisis Data Statistika
+
+# Kelompok 1 – Kelas RA – 2025
 
 # Paket R yang Digunakan
 1. ggplot2
