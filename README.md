@@ -21,7 +21,7 @@ Pendapatan Orang Tua: Pendapatan per bulan
 Jumlah Saudara / Anggota Keluarga: Data demografi
 
 # Tahapan dan Alur Analisis
-# 1. Import & Data Cleaning
+1. Import & Data Cleaning
 - Membaca dataset CSV
 - Menyamakan nama kolom: “IPK” dan “Tempat_Tinggal”
 - Mengubah IPK menjadi numeric
