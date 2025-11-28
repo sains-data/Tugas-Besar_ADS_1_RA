@@ -2,7 +2,7 @@
 
 # Kelompok 1 – Kelas RA – 2025
 
-# Paket R yang Digunakan
+## Paket R yang Digunakan
 1. ggplot2
 Untuk visualisasi statistik, terutama: Boxplot sebaran nilai IPK, Penanda mean, Warna kategori, Kustomisasi tema
 2. dplyr
